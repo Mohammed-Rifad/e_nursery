@@ -1,0 +1,56 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+    {% if est_prod %}
+    <table style="margin-left: 200px;margin-top: 40px; margin-bottom: 20px; border-spacing: 20px; border-collapse: separate;">
+        <tr style="font-size: medium;">
+            <th>Requested Date : </th>
+            <th>{{est_data.exp_date}}</th>
+        </tr>
+        <tr style="font-size: medium;">
+            <th>Estimated Date : </th>
+            <th>{{est_data.est_date}}</th>
+        </tr>
+        <tr style="font-size: medium;">
+            <th>Budget : </th>
+            <th>Rs {{est_data.budget}}</th>
+        </tr>
+        <tr style="font-size: medium;">
+            <th>Design : </th>
+            <th><a href="{{est_data.plot_design.url}}" style="color: blue;" target="_blank">View design </a></th>
+        </tr>
+    </table>
+    
+    
+    
+    <table class="table table-hovered">
+       <tr>
+        <th>Sl.No</th>
+        <th>Product No</th>
+        <th>Product Name</th>
+        <th>Total Price</th>
+        <th></th>
+    </tr>
+    
+    {% for prod in est_prod %}
+    <form action="{% url 'e_nursery:view_est' prod.req_id.req_id  %}" method="POST">
+        {% csrf_token %}
+    <tr style="font-size: medium;">
+        <td>{{forloop.counter}}</td>
+        <td>{{prod.product_id.prod_no}}</td>
+        <td>{{prod.product_id.p_name|title}}</td>
+        <td> Rs.{{prod.product_id.p_price}}</td>
+        <td><input type="hidden" name="p_id" value="{{prod.product_id.p_id}}" id=""></td>
+        
+    </tr>
+    </form>
+    {% endfor %}
+    </table>
+    <p  style="margin-left: 720px;font-size: medium;"> <b>Total :Rs. {{total}}</b></p>
+    </div>
+    {% else %}
+    <p class="text-danger h4" style="margin-top: 80px; margin-left: 200px;">No Products Added Yet</p>
+    {% endif %}
+{% endblock %}

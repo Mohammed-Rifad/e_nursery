@@ -1,0 +1,38 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+<form method="Post" action="{% url 'e_nursery:sp_request' %}" style="background-color: white;margin-left: 290px;" enctype="multipart/form-data" >
+    {% csrf_token %}
+    {% if success_msg %}
+    <p class="h5 text-danger" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{success_msg}}</p>
+    {% endif %}
+    
+    <table class="tb">
+        
+    
+        <tr>
+            <td>{{form.item.label}}</td>
+            <td>{{form.item}}</td>
+        </tr>
+        <tr>
+            <td>{{form.requirements.label}}</td>
+            <td>{{form.requirements}}</td>
+        </tr>
+       
+        <tr>
+            <td>{{form.design.label}}</td>
+            <td>{{form.design}}</td>
+        </tr>
+     
+        
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+   </form>
+
+
+{% endblock %}

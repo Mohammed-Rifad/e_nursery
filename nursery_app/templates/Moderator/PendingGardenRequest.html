@@ -1,0 +1,39 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+
+    {% if request_list %}
+   
+
+<table class="table table-striped">
+    <tr>
+        <th>Customer Name</th>
+        <th>Date</th>
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="{% url 'e_nursery:p_grequest' %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{list.cust_id.cust_name|title}}</td>
+<td style="font-size: large;">{{list.date_posted}}</td>
+<td><input type="submit"  name="details" id="" value="Details" class="btn btn-primary"> 
+<input type="submit"  name="approve" id="" value="Approve" class="btn btn-primary"> 
+<input type="submit"  name="reject" id="" value="Reject" class="btn btn-danger">
+<input type="hidden" name="req_id" value="{{list.req_id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Recent Request</p>
+
+{% endif %}
+{% endblock %}
+
+</div>

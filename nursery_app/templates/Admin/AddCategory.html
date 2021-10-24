@@ -1,0 +1,55 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form method="Post" action="{% url 'e_nursery:add_cat' %}" enctype="multipart/form-data" class="frm">
+    {% csrf_token %}
+    {% if success_msg %}
+    <p class="h5 text-success" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{success_msg}}</p>
+    {% endif %}
+    {% if error_msg %}
+    <p class="h5 text-danger" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{error_msg}}</p>
+    {% endif %}
+    
+    <table class="tb">
+        <tr>
+           <td>Type</td>
+           <td>
+               <select name="main_cat" class="form-control">
+                {% for cat in main_cat %}
+                <option value="{{cat.m_id}}">{{cat.m_name|capfirst}}</option>
+                {% endfor %}
+            </select>
+           </td>
+        </tr>
+        <tr>
+            <td>{{form.c_name.label}}</td>
+            <td>{{form.c_name}}</td>
+        </tr>
+        <tr>
+            <td>{{form.c_desc.label}}</td>
+            <td>{{form.c_desc}}</td>
+        </tr>
+        <tr>
+            <td>{{form.c_img.label}}</td>
+            <td>{{form.c_img}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+    </form>
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+<div style="min-height: 300px;">
+{% if show %}
+
+<p style="margin-top: 50px;margin-left: 270px;" class="text-danger h4">Please Submit Selling Request Form</p>
+
+<form method="Post" action="{% url 'e_nursery:sell_reg' %}" enctype="multipart/form-data" class="frm" style="background-color: white;">
+    {% csrf_token %}
+    {% if success_msg %}
+    {{msg}}
+
+    <table class="tb" style="margin-left: 250px;border-spacing: 10px;border-collapse: separate;" >
+        <tr>
+           <td>{{form.sell_name.label}}</td>
+           <td>{{form.sell_name}}</td>
+        </tr>
+        <tr>
+            <td>{{form.sell_exp.label}}</td>
+            <td>{{form.sell_exp}}</td>
+        </tr>
+        <tr>
+            <td>{{form.doc_type.label}}</td>
+            <td>{{form.doc_type}}</td>
+        </tr>
+        <tr>
+            <td>{{form.doc.label}}</td>
+            <td>{{form.doc}}</td>
+        </tr>
+        
+        <tr>
+            <td>{{form.about_me.label}}</td>
+            <td>{{form.about_me}}</td>
+        </tr>
+      
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+   </form>
+
+   {% else %}
+   <p style="margin-top: 180px;margin-left: 270px;" class="text-danger h4">{{status_msg}}</p>
+
+   {% endif %}
+   </div>
+{% endblock %}

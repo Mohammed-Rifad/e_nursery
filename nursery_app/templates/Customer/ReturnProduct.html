@@ -1,0 +1,40 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+
+
+
+
+
+<form method="POST" action="{% url 'e_nursery:return_product' order_no %}" enctype="multipart/form-data" style="margin-left: 240px; background-color: white;">
+    {% csrf_token %}
+    {% if success_msg %}
+    <p class="h5 text-success" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{success_msg}}</p>
+    {% endif %}
+    {% if error_msg %}
+    <p class="h5 text-danger" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{error_msg}}</p>
+    {% endif %}
+   
+    <table class="tb" style="border-spacing: 10px;border-collapse: separate;">
+        <tr>
+           <td>Product image</td>
+           <td>
+               <input type="file" readonly name="img">
+
+           </td>
+        </tr>
+        <tr>
+            <td>Reason</td>
+            <td><input type="text" name="reason" ></td>
+        </tr>
+        
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+   </form>
+
+{% endblock %}

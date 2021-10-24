@@ -1,0 +1,41 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+
+
+
+
+
+<form method="POST" action="{% url 'e_nursery:stock_update' %}" enctype="multipart/form-data" class="frm">
+    {% csrf_token %}
+   
+    <table class="tb">
+        <tr>
+           <td>Product No</td>
+           <td>
+               <input type="text" readonly name="p_no" value="{{p_no}}" class="form-control">
+
+           </td>
+        </tr>
+        <tr>
+            <td>Current Stock</td>
+            <td><input type="text" readonly name="stock" value="{{stock}}" class="form-control"></td>
+        </tr>
+        <tr>
+            <td>New Stock</td>
+            <td><input type="number" min=1 value="1" name="new_stock" required class="form-control"></td>
+        </tr>
+        <tr>
+            <td>{{form.c_img.label}}</td>
+            <td>{{form.c_img}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+   </form>
+
+{% endblock %}

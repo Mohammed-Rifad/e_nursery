@@ -1,0 +1,62 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+<div class="container" style="min-height: 600px;">
+
+   {% if request_list %}
+   <table class="table table-striped" style="margin-top: 30px;">
+    <tr>
+        <th>Customer<br/> Name</th>
+        
+        <th>Address</th>
+        <th>Phone No</th>
+        
+        <th>Moderator</th>
+        <th>Budget</th>
+        <th>Estimation<br>Date</th>
+        <th>Status</th>
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="{% url 'e_nursery:con_sp' %}" method="POST">
+        {% csrf_token %}
+    <tr>
+        <td style="font-size: medium;word-wrap: break-word;white-space: normal;">{{list.cust_id.cust_name|title}}</td>
+
+        <td style="font-size: medium; word-wrap: break-word;white-space: normal;">{{list.cust_id.cust_address|capfirst}}</td>
+        <td style="font-size: medium;">{{list.cust_id.cust_phno}}</td>
+        <!-- <td style="font-size: medium;word-wrap: break-word;white-space: normal;">{{list.status|title}}</td> -->
+        <td style="font-size: medium;">{{list.mod_id.mod_name|title}}</td>
+        <td style="font-size: medium;">{% if list.budget %} Rs.{{list.budget}} {% endif %}</td>
+        <td style="font-size: medium;">{{list.est_date}}</td>
+        <td style="font-size: medium; word-wrap: break-word;">{{list.status|title}}</td>
+        
+        
+<td>
+<input type="submit" name="details" value="View Details" class="btn btn-primary" style="width: 150px;"> 
+<br>
+<input type="submit" name="completed" value="Work Completed" class="btn btn-danger" style="margin-top: 10px;width: 150px;"> 
+<td><input type="hidden" name="id" id="" value="{{list.id}}"></td>
+       
+    
+</td>
+
+
+<td><input type="hidden" name="req_id" value="{{list.req_id}}"></td></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+
+
+
+
+
+{% else %}
+<p style="margin-left: 320px; margin-top: 120px;" class="h3 text-danger">No Record Found</p>
+{% endif %}
+{% endblock %}
+</div>

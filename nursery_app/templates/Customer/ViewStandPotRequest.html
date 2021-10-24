@@ -1,0 +1,123 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+<div class="container" style="min-height: 600px;">
+
+   {% if standpot_list %}
+
+<table class="table table-striped" style="margin-top: 50px;">
+    <tr>
+        
+        <th>Date</th>
+        <th>Item</th>
+        <th>Requirements</th>
+        
+        <th>Status</th>
+        <th>Reason</th>
+        <th>Budget</th>
+        <th>Estimated Date</th>
+        <th></th>
+        <th></th>
+       
+    </tr>
+    {% for list in standpot_list %}
+    <form action="{% url 'e_nursery:view_sp' %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{list.posted_date}}</td>
+<td style="font-size: large;">{{list.item|title}}</td>
+
+<td style="font-size: large;word-wrap: break-word;min-width:100px; white-space: normal;">{{list.requirements}}</td>
+
+<td style="font-size: large;">{{list.status|capfirst}}</td>
+
+
+<td style="font-size: large;max-width: 100px;">
+
+    {% if list.reject_reason %}
+    {{list.reject_reason|capfirst}}
+
+    {% else %}
+    Nil
+    {% endif %} 
+
+</td>
+
+<td style="font-size: large;max-width: 100px;">
+
+    {% if list.budget %}
+     Rs.{{list.budget}}
+
+    {% else %}
+    Not Given
+    {% endif %} 
+
+</td>
+
+<td style="font-size: large;max-width: 100px;">
+
+    {% if list.est_date %}
+     {{list.est_date}}
+
+    {% else %}
+    Not Given
+    {% endif %} 
+
+</td>
+
+  
+
+
+
+{% if list.status == 'approved' %}
+    <td>
+        <input type="submit" name="confirm" value="Confirm" class="btn btn-primary"> 
+        </td>
+     <td>
+       
+        <input type="submit" name="reject"  class="btn btn-danger" value="Reject"> 
+       
+      
+</td>
+
+{% endif %}
+<td><input type="hidden" name="req_id" value="{{list.id}}"></td></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+<nav aria-label="Page navigation example" class="nav-p">
+    <ul class="pagination">
+        <li class="page-item">
+            {% if standpot_list.has_previous %}
+            <a class="page-link" href="?page={{standpot_list.previous_page_number}}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            {% endif %}
+        </li>
+        {% for p in standpot_list.paginator.page_range %}
+        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+        {% endfor %}
+        <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+        <li class="page-item">
+            {% if standpot_list.has_next %}
+            <a class="page-link" href="?page={standpot_list.next_page_number}}"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+
+{% else %}
+
+<p style="margin-left: 320px; margin-top: 120px;" class="h3 text-danger">No Record Found</p>
+
+{% endif %}
+{% endblock %}
+</div>

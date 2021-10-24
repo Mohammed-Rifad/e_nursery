@@ -1,0 +1,64 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+
+   {% if request_list %}
+
+<table class="table table-striped">
+    <tr>
+        <th>Customer Name</th>
+        <th>Date</th>
+       
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="/nursery/Moderator/Estimation?req={{list.req_id}}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{list.cust_id.cust_name|title}}</td>
+<td style="font-size: large;">{{list.date_posted}}</td>
+
+<td><input type="submit"  name="add_est" id="" value="Add Estimation" class="btn btn-primary"> 
+    <a class="btn btn-warning" href="{% url 'e_nursery:view_est' list.req_id %}"> View Estimation </a>
+
+<input type="hidden" name="req_id" value="{{list.req_id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+<nav aria-label="Page navigation example" class="nav-p">
+    <ul class="pagination">
+        <li class="page-item">
+            {% if request_list.has_previous %}
+            <a class="page-link" href="?page={{request_list.previous_page_number}}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            {% endif %}
+        </li>
+        {% for p in request_list.paginator.page_range %}
+        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+        {% endfor %}
+        <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+        <li class="page-item">
+            {% if request_list.has_next %}
+            <a class="page-link" href="?page={{request_list.next_page_number}}"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Recent Request</p>
+
+{% endif %}
+{% endblock %}
+</div>

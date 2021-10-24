@@ -1,0 +1,23 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+
+<form action="{% url 'e_nursery:reject_reason' %}" method="POST">
+
+<table style="border-spacing: 10px;border-collapse: separate;margin-left: 200px;">
+
+    {% csrf_token %}
+    <tr>
+        <td>Reject Reason</td>
+        <td><textarea name="reason" required class="form-control" cols="20" rows="10"></textarea> </td>
+    </tr>
+   
+    <tr>
+        <td></td>
+<td><input type="submit" name="" id="" value="Submit" class="btn btn-primary"></td>
+<td><input type="hidden" value="{{req_id}}" name="req_id" id=""></td>
+    </tr>
+</table>
+</form>
+{% endblock %}

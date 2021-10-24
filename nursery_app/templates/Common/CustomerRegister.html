@@ -1,0 +1,60 @@
+{% extends 'Common/CommonMaster.html' %}
+
+{% block content%}
+
+<form method="Post" action="{% url 'e_nursery:cust_reg' %}" enctype="multipart/form-data" class="reg-form" style="background-color: white;margin-left: 220px;margin-right: 200px;"> 
+    {% csrf_token %}
+    {% if success_msg %}
+    <p class="h5 text-success" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{success_msg}}</p>
+    {% endif %}
+    {% if error_msg %}
+    <p class="h5 text-danger" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{error_msg}}</p>
+    {% endif %}
+    
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+    </div>
+    {% endfor %}
+    
+    <table class="tb" >
+        <tr>
+           <td>{{form.cust_name.label}}</td>
+           <td>{{form.cust_name}}</td>
+        </tr>
+        <tr>
+            <td>{{form.cust_address.label}}</td>
+            <td>{{form.cust_address}}</td>
+        </tr>
+        <tr>
+            <td>{{form.cust_phno.label}}</td>
+            <td>{{form.cust_phno}}</td>
+        </tr>
+        <tr>
+            <td>{{form.cust_email.label}}</td>
+            <td>{{form.cust_email}}</td>
+        </tr>
+        <tr>
+            <td>{{form.cust_passwd.label}}</td>
+            <td>{{form.cust_passwd}}</td>
+        </tr>
+        <tr>
+            <td>{{form.cust_img.label}}</td>
+            <td>{{form.cust_img}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn btn-primary"></td>
+        </tr>
+    </table>
+
+   </form>
+
+{% endblock %}

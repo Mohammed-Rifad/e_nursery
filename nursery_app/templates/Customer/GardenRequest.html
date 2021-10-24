@@ -1,0 +1,85 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+
+<div class="container" style="min-height: 600px;">
+
+   {% if request_list %}
+
+<table class="table table-striped" style="margin-top: 30px;">
+    <tr>
+        
+        <th>Date</th>
+     
+        <th>Status</th>
+        <th>Reason</th>
+        
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{list.date_posted}}</td>
+
+<td style="font-size: large;">{{list.status|title}}</td>
+
+{% if list.status == 'rejected' %} -->
+<td style="font-size: large;max-width: 100px;">{{list.reject_reason|capfirst}}</td>
+
+{% else %}
+<td>Nil</td>
+{% endif %} 
+
+    <td>
+        {% if list.status == 'approved' %}
+        <a  class="btn btn-warning" href="{% url 'e_nursery:est_product' list.req_id %}"> View Details</a>
+     
+        <input type="submit" name="confirm" value="Confirm" class="btn btn-primary"> 
+        <input type="submit" name="reject"  class="btn btn-danger" value="Reject"> 
+       
+        </a>
+</td>
+
+{% endif %}
+<td><input type="hidden" name="req_id" value="{{list.req_id}}"></td></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+<nav aria-label="Page navigation example" class="nav-p">
+    <ul class="pagination">
+        <li class="page-item">
+            {% if request_list.has_previous %}
+            <a class="page-link" href="?page={{request_list.previous_page_number}}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            {% endif %}
+        </li>
+        {% for p in request_list.paginator.page_range %}
+        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+        {% endfor %}
+        <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+        <li class="page-item">
+            {% if request_list.has_next %}
+            <a class="page-link" href="?page={{request_list.next_page_number}}"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+
+{% else %}
+
+<p style="margin-left: 320px; margin-top: 120px;" class="h3 text-danger">No Record Found</p>
+
+{% endif %}
+{% endblock %}
+</div>

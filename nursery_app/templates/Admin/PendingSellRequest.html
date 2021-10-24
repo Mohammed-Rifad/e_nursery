@@ -1,0 +1,47 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+
+    {% if sell_data %}
+   
+
+<table class=" table table-hovered" style="table-layout: fixed; border-spacing: 1px; border-collapse: separate;">
+    <tr>
+        <th>Seller Name</th>
+        <th>Experience</th>
+        <th>About Me</th>
+        <th>Document Type</th>
+        <th>Document</th>
+        
+        <th></th>
+        
+    </tr>
+    {% for data in sell_data %}
+    <form action="{% url 'e_nursery:sell_pending' %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{data.sell_name|title}}</td>
+<td style="font-size: large;">{{data.sell_exp}} {% if data.sell_exp > 1%} Yrs {% else %} Yr {% endif %}</td>
+<td style="font-size: large;word-wrap: break-word; white-space: normal;">{{data.about_me|capfirst}}</td>
+<td style="font-size: large;">{{data.doc_type|title}}</td>
+<td style="font-size: large;"><a href="{{data.doc.url}}" style="color: blue;font-size: large;" target="_blank">View Document</a></td>
+
+
+<td><input type="submit"  name="approve" id="" value="Approve" class="btn btn-primary"  style="width: 100px;"> 
+    <br>
+    <input type="submit"  name="reject" id="" value="Reject" class="btn btn-danger" style="margin-top: 10px; width: 100px;"> 
+<input type="hidden" name="id" value="{{data.sell_id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Recent Request</p>
+
+{% endif %}
+
+{% endblock %}

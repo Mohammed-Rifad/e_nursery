@@ -1,0 +1,46 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form action="{% url 'e_nursery:ret_detail' order_data.order_no.order_no %}" method="POST">
+{% csrf_token %}
+<table style="margin-left: 200px;border-spacing: 20px;border-collapse: separate;">
+    <tr>
+        <th>Order No</th>
+        <td><input class="form-control text-center" readonly type="text" value="{{order_data.order_no.order_no}}"></td>
+    </tr>
+    <tr>
+        <td>Product No</td>
+        <td><input class="form-control text-center" readonly type="text" value="{{order_data.order_no.nursery_product.prod_no}}"></td>
+    </tr>
+    <tr>
+        <td>Product Name</td>
+        <td><input class="form-control text-center" readonly type="text" value="{{order_data.order_no.nursery_product.p_name|title}}"></td>
+    </tr>
+    <tr>
+        <td>Customer Name</td>
+        <td><input class="form-control text-center" readonly type="text" value="{{order_data.cust_id.cust_name|title}}"></td>
+    </tr>
+    <tr>
+        <td>Return Reason</td>
+        <td><textarea class="form-control text-center" readonly type="text" cols="5" rows=5 >{{order_data.reason|capfirst}}</textarea></td>
+    </tr>
+    <tr>
+        <td>Shipping Address</td>
+        <td><textarea class="form-control text-center" readonly type="text" cols="5" rows=5 >{{order_data.order_no.shipping_address|capfirst}}</textarea></td>
+    </tr>
+    <tr>
+        <td>View Pic</td>
+        <td><a href="{{order_data.prod_img.url}}" class="text-center" target="_blank" style="color: blue;">View</a></td>
+    </tr>
+   
+        
+        
+        <tr>
+        
+            <td align="right"><input class="btn btn-primary" type="submit" value="Packed" name="packed"></td>
+            <td><input class="btn btn-primary" type="submit" name="delivered" value="Delivered" name="delivered"></td>
+        </tr>
+</table>
+</form>  
+{% endblock %}

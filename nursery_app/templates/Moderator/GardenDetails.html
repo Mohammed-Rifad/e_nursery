@@ -1,0 +1,35 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+
+
+<table style="border-spacing: 10px;border-collapse: separate;margin-left: 200px;">
+
+    <tr>
+        <td>Customer Name</td>
+        <td><input type="text" readonly   class="form-control" value="{{req_data.cust_id.cust_name|title}}" id=""></td>
+    </tr>
+    <tr>
+        <td>Date Posted</td>
+        <td><input type="text" readonly  class="form-control" value="{{req_data.date_posted}}" id=""></td>
+    </tr>
+    <tr>
+        <td>Requirements</td>
+        <td><textarea readonly class="form-control" col=16 rows="10">{{req_data.requirements}}</textarea></td>
+    </tr>
+    <tr>
+        <td>Expected Date</td>
+        <td><input type="text" readonly name="c_name" class="form-control" value="{{req_data.exp_date}}" id=""></td>
+    </tr>
+    <tr>
+        <td>Budget</td>
+        <td><input type="text" readonly name="c_name" class="form-control" value="Rs {{req_data.budget}}" id=""></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a class="btn btn-primary" href="{{req_data.plot_pic.url}}"  target="_blank">View Plot</a></td>
+    </tr>
+</table>
+
+{% endblock %}

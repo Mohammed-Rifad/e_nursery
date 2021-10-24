@@ -1,0 +1,139 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+
+<form action="{% url 'e_nursery:add_estimation' %}" method="POST" enctype="multipart/form-data">
+<table style="border-spacing: 10px;border-collapse: separate;margin-left: 200px;">
+{% csrf_token %}
+    <tr>
+        <td>Estimation Date</td>
+        <td><input type="date" name="date" class="form-control" id="date" required></td>
+    </tr>
+    <tr>
+        <td>Upload Design</td>
+        <td><input type="file" name="design" class="form-control" id="design" required></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" name="est_date" value="Submit" id="btn-date" class="btn btn-primary"></td>
+    </tr>
+    
+</table>
+<p class="text-danger h5" id="msgBox" style="margin-left: 240px; margin-top: 20px;">{{date_msg}}</p>
+
+</form>
+
+<div  >
+  
+
+
+    <p  class="text-danger h4" style="margin-left: 290px;margin-top: 70px;padding: 0px;">Add Products</p>
+
+    
+
+    <table style="border-spacing: 10px;border-collapse: separate; margin-top: 50px;margin-left: 200px;">
+        
+        <form action="{% url 'e_nursery:add_estimation' %}" method="POST" >
+            {% csrf_token %}
+            
+            <tr>
+                <td>Product No</td>
+                <td><input type="text" name="p_no" class="form-control" id="prod_no"></td>
+            </tr>
+            <tr>
+            <td>Product Name</td>
+            <td><input type="text" readonly required class="form-control" id="pname" value="{{product.p_name|title}}"></td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td><input type="text" id="price" required readonly class="form-control" value="{{product.p_price}}"></td>
+           
+        </tr>
+        
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" name="Add" id="" class="btn btn-primary"></td>
+        </tr>
+        
+    </table>
+    <p class="text-danger h5" id="msgBox" style="margin-left: 240px; margin-top: 20px;">{{product_msg}}</p>
+    </form>
+
+
+
+
+
+</div>
+
+
+
+
+
+<script>
+              $(document).ready(function(){
+
+              
+                $("#prod_no").change(()=>{
+                    const pr_no =document.getElementById("prod_no").value
+                    console.log(pr_no)
+                  $.ajax({                      
+         url: '/nursery/Moderator/getData',                  
+         data: {
+             'pr_no':pr_no ,
+              
+         },
+         
+         success: function (data) {   
+           console.log(data)
+           if(data!="")
+           {
+           document.getElementById('pname').value=data[0]
+           document.getElementById('price').value=data[1]
+           }
+
+           else{
+            document.getElementById('pname').value=""
+           document.getElementById('price').value=""
+           }
+            
+            
+         }
+     });
+                })
+              });
+
+                // <!--        $(".qty").change(function(){
+                //   const url = $("#updateCart").attr("cart-update");
+                //   const qty = $(this).val(); 
+
+                //   var p_id=document.getElementById("p")
+                  // var value="";
+
+                  // for(var i=0;i<p_id.length;i++){
+                  //    console.log('hai',p_id.item(i).value);
+                  // }
+                  // Array.prototype.forEach(id => {
+                  //    console.log('value',id.value);
+                  //    if(id.value!=undefined)
+                  //    value=id.value
+                  // });
+                  
+                  
+   //                $.ajax({                      
+   //       url: url,                    
+   //       data: {
+   //           'qty': qty,
+   //           'prod_id':p_id      
+   //       },
+         
+   //       success: function (data) {   
+          
+   //         window.location.href="/nursery/CustomerHome/Cart";
+            
+            
+   //       }
+   //   });
+
+      </script> 
+{% endblock %}

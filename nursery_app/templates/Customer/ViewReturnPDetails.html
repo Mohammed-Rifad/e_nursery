@@ -1,0 +1,54 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+
+<div class="container" style="min-height: 300px;">
+    {% if product_list %}
+    <table class="table table-striped " style="table-layout: fixed; margin-top: 40px;" >
+        <tr >
+           <th>Order No</th>
+           <th>Product Name</th>
+          
+          <th>Order status</th>
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for product in product_list %}
+        <tr >
+           <td>{{product.order_no.order_no}}</td>
+            <td>{{product.order_no.nursery_product.p_name|title}}</td>
+            <td>{{product.status}}</td>
+           
+          </tr> 
+   
+        {% endfor %}
+       
+       
+           
+            
+            
+      
+    </table>
+   
+    
+</div>
+    {% else %}
+    <p class="h3 text-danger" style="margin-top: 200px;margin-left: 290px;">No Any Recent Orders</p>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

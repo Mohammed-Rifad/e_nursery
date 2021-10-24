@@ -1,0 +1,86 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+    <div class="container">
+  
+    {% if orders_list %}
+    
+    <table class="table table-striped " >
+        <tr >
+            <th>Order.No</th>
+            <th>Seller Name</th>
+            <th>Seller Email</th>
+           
+           
+           <th>Product</th>
+          
+           <th>Qty</th>
+           <th>Total Amount</th>
+           <th>Order Date</th>
+         
+           
+          <th>Status</th>
+          <th></th>
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for order in orders_list %}
+        <tr style="font-size: medium;" >
+            <td style="min-width: 100px;">{{order.order_no}}</td>
+           <td style="min-width: 100px;">{{order.seller_id.sell_name|title}}</td>
+           <td style="min-width: 100px;">{{order.seller_id.cust_id.cust_email}}</td>
+            <td>{{order.craft_product.cr_name|title}}</td>
+            <td> {{order.qty}} {% if order.qty > 1 %} Nos {% else %} No{% endif %}</td>
+            <td> Rs.{{order.total}}</td>  
+            <td>{{order.order_date}}</td>  
+              
+            <td>{{order.order_status|title}}</td>
+            
+                
+             
+            </tr>
+            
+        
+        
+        {% endfor %}
+    </table>
+    <nav aria-label="Page navigation example" class="nav-p">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if orders_list.has_previous %}
+                <a class="page-link" href="?page={{orders_list.previous_page_number}}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                {% endif %}
+            </li>
+            {% for p in orders_list.paginator.page_range %}
+            <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+            {% endfor %}
+            <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+            <li class="page-item">
+                {% if orders_list.has_next %}
+                <a class="page-link" href="?page={{orders_list.next_page_number}}"  aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    
+</div>
+    {% else %}
+    <p class="h3 text-danger" style="margin-top: 140px;margin-left: 260px;">No Data Found</p>
+    {% endif %}
+
+    
+
+{% endblock %}

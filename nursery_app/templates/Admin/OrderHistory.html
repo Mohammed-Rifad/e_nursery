@@ -1,0 +1,89 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+    {% if orders %}
+    <table class="table table-striped " style="table-layout: fixed;" >
+        <tr align="center">
+           <th>O.ID</th>
+           <th>P.ID</th>
+          <th>Order Date</th>
+          <th>Status</th>
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for product in orders %}
+        <tr >
+           <td>{{product.order_no}}</td>
+            <td>{{product.nursery_product.prod_no}}</td>
+            <!-- <td>{{product.cust_id.cust_name|title}}</td>
+            <td>{{product.prod_id.p_name|title}}</td>-->
+            
+            <td>{{product.order_date}}</td> 
+            <td>{{product.order_status}}</td>   
+            
+            <td><a style="color: blue;" href="{% url 'e_nursery:hst_detail' product.order_no %}">Order Details</a></td>
+            
+        
+         <!-- <td style=" word-wrap: break-word; height: 100px;;">{{product.shipping_address}}</td> -->
+           
+            <!-- <td style="word-wrap: break-word;white-space: normal; width: 100px;"><span>{{product.shipping_address}}</span></td>
+            <td>{{product.qty}}</td>
+            <td>Rs.{{product.total}}</td>
+            <td><a href="" style="color: blue;">Packed</a></td>
+            <td><a href="" style="color: blue;">Delivered</a></td>
+            <td><input type="hidden" value="{{product.prod_id.p_id}}"></td>
+        </tr> -->
+        {% endfor %}
+    </table>
+    <nav aria-label="Page navigation example" class="nav-p">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if orders.has_previous %}
+                <a class="page-link" href="?page={{orders.previous_page_number}}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                {% endif %}
+            </li>
+            {% for p in orders.paginator.page_range %}
+            <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+            {% endfor %}
+            <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+            <li class="page-item">
+                {% if orders.has_next %}
+                <a class="page-link" href="?page={{orders.next_page_number}}"  aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+
+
+</div>
+    {% else %}
+    <p class="h3 text-danger" style="margin-top: 200px;margin-left: 290px;">No Data Found</p>
+    {% endif %}
+
+    
+
+</body>
+</html>
+{% endblock %}

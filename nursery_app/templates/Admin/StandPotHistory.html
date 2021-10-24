@@ -1,0 +1,85 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+
+    {% if request_list %}
+   
+
+<table class="table table-striped" >
+    <tr align="center">
+        <th>Customer<br/> Name</th>
+        
+        <th>Address</th>
+        <th>Phone No</th>
+        
+        <th>Moderator</th>
+        <th>Budget</th>
+        
+        <th>Completed <br/> Date</th>
+        <th>Delivered <br> Date</th>
+        <th>Status</th>
+        <th>Reason</th>
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="{% url 'e_nursery:ap_sp'  %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: medium;word-wrap: break-word;white-space: normal;">{{list.cust_id.cust_name|title}}</td>
+
+<td style="font-size: medium; word-wrap: break-word;white-space: normal;">{{list.cust_id.cust_address|capfirst}}</td>
+<td style="font-size: medium;">{{list.cust_id.cust_phno}}</td>
+<!-- <td style="font-size: medium;word-wrap: break-word;white-space: normal;">{{list.status|title}}</td> -->
+<td style="font-size: medium;">{{list.mod_id.mod_name|title}}</td>
+<td style="font-size: medium;">{% if list.budget > 0 %} Rs.{{list.budget}} {% else %} Nil {% endif %}</td>
+<td style="font-size: medium;width: 70px;">{%if list.completed_date %} {{list.completed_date}} {% else %} Nil {% endif %}</td>
+<td style="font-size: medium; width: 70px;">{%if list.delivered_date %} {{list.delivered_date}} {% else %} Nil {% endif %}</td>
+<td style="font-size: medium;word-wrap: break-word;white-space: normal;">{{list.status|title}}</td>
+<td style="font-size: medium;word-wrap: break-word;white-space: normal;">{% if list.reject_reason == "" %} Nil {% else %} {{list.reject_reason|capfirst}} {% endif %}</td>
+
+
+<td>
+    <input type="submit"  name="details" id="" value="details" class="btn btn-primary" style="width: 100px;"> 
+  
+   
+<input type="hidden" name="id" value="{{list.id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+<nav aria-label="Page navigation example" class="nav-p">
+    <ul class="pagination">
+        <li class="page-item">
+            {% if request_list.has_previous %}
+            <a class="page-link" href="?page={{request_list.previous_page_number}}"
+                aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+            {% endif %}
+        </li>
+        {% for p in request_list.paginator.page_range %}
+        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+        {% endfor %}
+        <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+        <li class="page-item">
+            {% if request_list.has_next %}
+            <a class="page-link" href="?page={{request_list.next_page_number}}"  aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Data Found</p>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+    <div class="container">
+        <form action="{% url 'e_nursery:sellers' %}" method="POSt">
+            {% csrf_token %}
+        <table style="margin-bottom: 40px;margin-left: 200px;border-spacing: 10px;border-collapse: separate;">
+            <tr>
+                <td style="font-size: medium;">Enter Name </td>
+                <td><input type="text" name="sell_name" id="sell_name" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit"  value="Search" class="btn btn-primary">
+                </td>
+            </tr>
+        </table>
+    </form>
+    {% if sellers %}
+    {% if not data %}
+    <p class="h3 text-danger" style="margin-top: 20px;margin-bottom: 20px; margin-left: 220px;" id="err_msg">No Data Found</p>
+    {% endif %}
+    <table class="table table-striped "  >
+        <tr >
+          
+           <th></th>
+           <th>Name</th>
+           <th>Experience</th>
+           <th>Address</th>
+          <th>Email</th>
+          <th>Phone No</th>
+         
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for seller in sellers %}
+        <tr style="font-size: large;" >
+            <td><img src="{{seller.cust_id.cust_img.url}}"  style="border-radius: 50px; height: 50px; width: 50px;"/></td>
+           <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{seller.sell_name|title}}</td>
+            <td>{{seller.sell_exp|title}} {% if seller.sell_exp > 1%} Yrs {% else %} Yr{% endif%}</td>
+           
+            
+            <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{seller.cust_id.cust_address}}</td>
+            <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{seller.cust_id.cust_email}}</td>
+            <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">{{seller.cust_id.cust_phno}}</td>
+            
+            </tr>
+            
+        
+        
+        {% endfor %}
+    </table>
+    <nav aria-label="Page navigation example" class="nav-p">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if sellers.has_previous %}
+                <a class="page-link" href="?page={{sellers.previous_page_number}}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                {% endif %}
+            </li>
+            {% for p in sellers.paginator.page_range %}
+            <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+            {% endfor %}
+            <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+            <li class="page-item">
+                {% if sellers.has_next %}
+                <a class="page-link" href="?page={{sellers.next_page_number}}"  aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+</div>
+    {% else %}
+    <p class="h3 text-danger" style="margin-top: 140px;margin-left: 220px;">No Data Found</p>
+    {% endif %}
+
+  <!-- <script>
+     
+   document.getElementById('sell_name').focus(()=>{
+          alert('ed')
+          msg=document.getElementById('err_msg')
+          if(msg){
+            document.getElementById('sell_name').vallue=""
+          }
+          else{
+
+          }
+      })
+       
+       </script> -->
+
+{% endblock %}

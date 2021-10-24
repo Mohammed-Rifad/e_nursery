@@ -1,0 +1,107 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+{% if products %}
+    <div class="container" style="min-height: 600px;">
+        <form action="{% url 'e_nursery:my_prod' %}" style="background-color: white;" method="POSt">
+            {% csrf_token %}
+        <table style="margin-bottom: 40px;margin-left: 200px;border-spacing: 10px;border-collapse: separate;">
+            <tr>
+                <td style="font-size: medium;">Product No </td>
+                <td><input type="text" name="prod_no" id="prd" class="form-control" placeholder="eg : PRSL2067656565" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit"  value="Search" class="btn btn-primary">
+                </td>
+            </tr>
+        </table>
+        {% if not exist %}
+    
+        
+    <p class="h3 text-danger" style="margin-top: 5px;margin-left: 250px; padding: 0%;" id="msg">No Product Found</p>
+    {% endif %}
+    </form>
+    
+    
+    <table class="table table-striped " style="table-layout: fixed;" >
+        <tr >
+          
+           <th>P.No</th>
+
+           <th>Product Name</th>
+           <th>Type</th>
+          <th>Sales Pack</th>
+          <th>Delivery Days</th>
+          <th>Stock Available</th>
+          <th></th>
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for product in products %}
+        <tr style="font-size: medium;" >
+           <td>{{product.prod_no}}</td>
+           
+           
+            <td>{{product.cr_name|title}}</td>  
+            <td>{{product.cr_type|title}}</td>
+            <td>{{product.cr_sales_pack|title}}</td>  
+            <td>{{product.cr_exp_days}} days</td>  
+            <td> {{product.cr_stock}} {% if product.cr_stock > 1 %} Nos {% else %} No{% endif %}</td>  
+            
+                
+              <td>  <a href="/nursery/CustomerHome/Stock?no={{product.prod_no}}"  class="text-primary">Update Stock</a></td>
+                <td><input type="hidden" name="p_no"  value="{{product.prod_no}}"></td>
+            </tr>
+            
+        
+        
+        {% endfor %}
+    </table>
+    <nav aria-label="Page navigation example" class="nav-p">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if products.has_previous %}
+                <a class="page-link" href="?page={{products.previous_page_number}}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                {% endif %}
+            </li>
+            {% for p in products.paginator.page_range %}
+            <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+            {% endfor %}
+            <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+            <li class="page-item">
+                {% if products.has_next %}
+                <a class="page-link" href="?page={{products.next_page_number}}"  aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    
+</div>
+{% else %}
+<p class="h3 text-danger" style="margin-top: 5px;margin-left: 350px; padding: 0%;margin-top: 50px;"  id="msg">No Data Found</p>
+{% endif %}
+
+    <script>
+        document.getElementById('prd').addEventListener('focus',()=>{
+
+            document.getElementById('msg')?document.getElementById('msg').innerHTML="":""
+            
+        })
+    </script>
+
+{% endblock %}

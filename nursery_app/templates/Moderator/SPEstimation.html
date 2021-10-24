@@ -1,0 +1,44 @@
+{% extends 'Moderator/ModeratorMaster.html' %}
+
+{% block content%}
+
+
+
+<div>
+  
+
+
+    
+
+    <table style="border-spacing: 10px;border-collapse: separate; margin-top: 50px;margin-left: 200px;">
+        <form action="{% url 'e_nursery:sp_approved' %}" method="POST" >
+            {% csrf_token %}
+            <tr>
+                <td>Estimated Date</td>
+                <td><input type="date" name="est_date" class="form-control" required id="prod_no"></td>
+            </tr>
+            <tr>
+            <td>Estimated Budget</td>
+            <td><input type="number"  required class="form-control" name="est_budget" id="pname" "></td>
+        <td> <input type="hidden" name="id" id="" value="{{id}}"></td>
+        </tr>
+        
+        
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" name="add" id="" class="btn btn-primary"></td>
+        </tr>
+        
+    </table>
+    </form>
+
+
+
+
+
+</div>
+
+
+
+
+{% endblock %}

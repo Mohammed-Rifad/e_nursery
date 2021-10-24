@@ -1,0 +1,44 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+
+    {% if request_list %}
+   
+
+<table class=" table table-hovered" style="table-layout: fixed; border-spacing: 1px; border-collapse: separate;">
+    <tr>
+        <th>Customer Name</th>
+        <th>Date</th>
+        <th>Status</th>
+        
+        
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="{% url 'e_nursery:recent_sp' %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: large;">{{list.cust_id.cust_name|title}}</td>
+<td style="font-size: large;">{{list.posted_date}}</td>
+<td style="font-size: large;">{{list.status|title}}</td>
+
+
+
+<td><input type="submit"  name="details" id="" value="Details" class="btn btn-primary"> 
+
+<input type="hidden" name="id" value="{{list.id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Recent Request</p>
+
+{% endif %}
+
+{% endblock %}

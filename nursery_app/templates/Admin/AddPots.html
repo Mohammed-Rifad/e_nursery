@@ -1,0 +1,90 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <form method="Post" action="{% url 'e_nursery:add_pots' %}" enctype="multipart/form-data" class="frm-pl">
+        {% csrf_token %}
+        {% if success_msg %}
+        <p class="h5 text-success" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{success_msg}}</p>
+        {% endif %}
+        {% if error_msg %}
+        <p class="h5 text-danger" style="margin-left: 20px;margin-right: 20px;margin-bottom:20px;font-weight:bold">{{error_msg}}</p>
+        {% endif %}
+        <table class="tb">
+            <tr>
+                <td>Select Category</td>
+                <td>
+                    <select name="cat" class="form-control">
+                        {% for category in categories %}
+
+                        <option value={{category.c_id}}>{{category.c_name|title}}</option>
+
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>{{form.p_name.label}}</td>
+                <td>{{form.p_name}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_desc.label}}</td>
+                <td>{{form.p_desc}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_dimension.label}}</td>
+                <td>{{form.p_dimension}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_material.label}}</td>
+                <td>{{form.p_material}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_sales_package.label}}</td>
+                <td>{{form.p_sales_package}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_color.label}}</td>
+                <td>{{form.p_color}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_location.label}}</td>
+                <td>{{form.p_location}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_price.label}}</td>
+                <td>{{form.p_price}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_stock.label}}</td>
+                <td>{{form.p_stock}}</td>
+            </tr>
+            
+            <tr>
+                <td>{{form.p_exp_days.label}}</td>
+                <td>{{form.p_exp_days}}</td>
+            </tr>
+            <tr>
+                <td>{{form.p_img.label}}</td>
+                <td>{{form.p_img}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Add" class="btn btn-primary"></td>
+            </tr>
+        </table>
+    
+       </form>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'Customer/CustomerMaster.html' %}
+
+{% block content%}
+
+
+<div class="container" style="min-height: 300px;">
+    {% if order_list %}
+    <table class="table table-striped " style="table-layout: fixed; margin-top: 40px;" >
+        <tr >
+           <th>Order No</th>
+           <th>Product No</th>
+           <th>Craft</th>
+          <th>Order Date</th>
+          <th></th>
+        
+           
+          
+          
+           <!-- <td>Shipping Address</td> -->
+           
+        </tr>
+        {% for product in order_list %}
+        <tr >
+           <td>{{product.order_no}}</td>
+            <td>{{product.craft_product.prod_no}}</td>
+           <td>{{product.craft_product.cr_name|title}}</td>
+            <td>{{product.order_date}}</td>  
+            
+            <td><a style="color: blue;" href="{% url 'e_nursery:cust_ord' product.order_no %}">Order Details</a></td>
+   
+        {% endfor %}
+    </table>
+    <nav aria-label="Page navigation example" class="nav-p">
+        <ul class="pagination">
+            <li class="page-item">
+                {% if order_list.has_previous %}
+                <a class="page-link" href="?page={{order_list.previous_page_number}}"
+                    aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                {% endif %}
+            </li>
+            {% for p in order_list.paginator.page_range %}
+            <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+            {% endfor %}
+            <!-- <li class="page-item "> Page {{p}} of {{panchayath_list.paginator.page}}</li> -->
+            <li class="page-item">
+                {% if order_list.has_next %}
+                <a class="page-link" href="?page={{order_list.next_page_number}}"  aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    
+</div>
+    {% else %}
+    <p class="h3 text-danger" style="margin-top: 200px;margin-left: 290px;">No Any Recent Orders</p>
+    {% endif %}
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

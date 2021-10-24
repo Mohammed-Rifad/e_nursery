@@ -1,0 +1,41 @@
+
+{% extends 'Common/CommonMaster.html' %}
+
+{% block content%}
+
+
+
+<div class="container">
+   
+<div class="row">
+   {% for product in product_list %}
+   <div class="col-md-3 column mt-4" >
+       <div class="card">
+         <a href="{% url 'e_nursery:product_details' product.p_id %}">
+          <img class="img-responsive" src="{{product.p_img.url}}" alt="{{product.p_name}}" style="width:100%;height:200px">
+          <div style="min-height: 200px;max-height: 200px;overflow: hidden;">
+             <h4 style="top: 20px;position: relative;left: 50px;">{{product.p_name|title}}</h4>
+             <hr/>
+              <p class="title" style="font-size: small; position: relative;top: 20px;overflow: hidden;">{{product.p_desc|capfirst}}</p> 
+         
+             <div class="center" style="position: relative;top: 20px;">
+                 
+           
+           
+           </div>
+             </p>
+          </div>
+          <div style="position: relative;left: 40px;top: 10px;">
+            <p><b style="font-weight: 600;">Rs.{{product.p_price}}</b></p>
+          </div>
+       </div>
+      </a>
+      </div>
+      {% endfor %}  
+    </div>
+
+</div>
+
+
+
+{% endblock %}

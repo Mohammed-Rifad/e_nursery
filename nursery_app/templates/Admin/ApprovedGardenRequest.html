@@ -1,0 +1,49 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div >
+
+    {% if request_list %}
+   
+
+<table class="table table-striped" >
+    <tr align="center">
+        <th>Customer Name</th>
+        <th>Date</th>
+        <th>Address</th>
+        <th>Phone No</th>
+        <th>Status</th>
+        <th>Moderator</th>
+  
+        <th></th>
+       
+    </tr>
+    {% for list in request_list %}
+    <form action="{% url 'e_nursery:admin_grequest'  %}" method="POST">
+        {% csrf_token %}
+    <tr>
+<td style="font-size: medium;">{{list.cust_id.cust_name|title}}</td>
+<td style="font-size: medium;">{{list.date_posted}}</td>
+<td style="font-size: medium; word-wrap: break-word;white-space: normal;">{{list.cust_id.cust_address|capfirst}}</td>
+<td style="font-size: medium;">{{list.cust_id.cust_phno}}</td>
+<td style="font-size: medium;">{{list.status|title}}</td>
+<td style="font-size: medium;">{{list.mod_id.mod_name|title}}</td>
+
+<td>
+    <input type="submit"  name="details" id="" value="details" class="btn btn-primary"> 
+    <input type="submit"  name="estimation" id="" value="Estimation" class="btn btn-warning">
+    <input type="submit"  name="completed" id="" value="Completed" class="btn btn-danger"> 
+<input type="hidden" name="req_id" value="{{list.req_id}}"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+{% else %}
+
+<p class="text-danger h4" style="margin-left: 250px; margin-top: 120px;">No Recent Request</p>
+</div>
+{% endif %}
+
+{% endblock %}
